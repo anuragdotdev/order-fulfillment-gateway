@@ -25,6 +25,13 @@ public class SseEventHub implements OrderEventObserver {
 		emitter.onCompletion(cleanup);
 		emitter.onTimeout(cleanup);
 		emitter.onError(ignored -> cleanup.run());
+		try {
+			emitter.send(SseEmitter.event()
+					.name("CONNECTED")
+					.data(orderId));
+		} catch (IOException exception) {
+			cleanup.run();
+		}
 		return emitter;
 	}
 
