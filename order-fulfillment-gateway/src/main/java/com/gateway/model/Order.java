@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -45,6 +47,48 @@ public class Order {
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
+
+    @ElementCollection
+    @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name = "order_id"))
+    private List<OrderItem> items = new ArrayList<>();
+
+    @Column(name = "customer_name", length = 160)
+    private String customerName;
+
+    @Column(name = "customer_email", length = 254)
+    private String customerEmail;
+
+    @Column(name = "shipping_address", length = 500)
+    private String shippingAddress;
+
+    @Column(name = "payment_method", length = 32)
+    private String paymentMethod;
+
+    @Column(name = "delivery_preference", length = 32)
+    private String deliveryPreference;
+
+    @Column(name = "shipping_cost")
+    private Double shippingCost;
+
+    @Column(name = "estimated_delivery_days")
+    private Integer estimatedDeliveryDays;
+
+    @Column(name = "notification_channel", length = 32)
+    private String notificationChannel;
+
+    @Column(name = "alert_urgency", length = 32)
+    private String alertUrgency;
+
+    public Order copy() {
+        Order copy = new Order(id, amount, riskScore, inStock, authenticated, international, status,
+                shippingLabel, customsInvoice, createdAt, new ArrayList<>(), customerName, customerEmail,
+                shippingAddress, paymentMethod, deliveryPreference, shippingCost, estimatedDeliveryDays,
+                notificationChannel, alertUrgency);
+        if (items != null) {
+            copy.setItems(new ArrayList<>(items.stream().map(OrderItem::copy).toList()));
+        }
+        return copy;
+    }
 
     @PrePersist
     protected void onCreate() {

@@ -21,13 +21,13 @@ public class DatabaseCheckRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("=================================================");
-        System.out.println(">>> Testing NeonDB Database Connection...");
+        System.out.println(">>> Testing database connection...");
         try (Connection connection = dataSource.getConnection()) {
             System.out.println(">>> Connection SUCCESS! Connected to: " + connection.getMetaData().getDatabaseProductName());
             System.out.println(">>> Schema Version: " + connection.getMetaData().getDatabaseProductVersion());
             System.out.println(">>> Existing orders in DB: " + orderRepository.count());
         } catch (Exception ex) {
-            System.err.println(">>> NeonDB Connection FAILED: " + ex.getMessage());
+            System.err.println(">>> Database connection FAILED: " + ex.getMessage());
         }
         System.out.println("=================================================");
     }

@@ -12,6 +12,8 @@ public class OrderResponse {
 	String status;
 	String shippingLabel;
 	String customsInvoice;
+	Double shippingCost;
+	Integer estimatedDeliveryDays;
 
 	public static OrderResponse from(Order order) {
 		return OrderResponse.builder()
@@ -19,6 +21,8 @@ public class OrderResponse {
 				.status(order.getStatus())
 				.shippingLabel(order.getShippingLabel())
 				.customsInvoice(order.getCustomsInvoice())
+				.shippingCost(order.getShippingCost())
+				.estimatedDeliveryDays(order.getEstimatedDeliveryDays())
 				.build();
 	}
 }

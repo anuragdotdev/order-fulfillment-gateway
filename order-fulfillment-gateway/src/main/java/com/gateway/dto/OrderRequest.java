@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
+import com.gateway.model.OrderItem;
 
 @Data
 @Builder
@@ -19,4 +21,11 @@ public class OrderRequest {
 	private boolean international;
 	private String paymentProvider;
 	private String alertRecipient;
+	private String customerName;
+	private String customerEmail;
+	private String shippingAddress;
+	private String deliveryPreference;
+	private String notificationChannel;
+	private String alertUrgency;
+	private List<OrderItem> items;
 }
